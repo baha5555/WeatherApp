@@ -158,6 +158,8 @@ class MainFragment : Fragment() {
     }
 
     private fun requestWeatherData(city: String) {
+        binding.progressBar.visibility = View.VISIBLE
+
         val url = "https://api.weatherapi.com/v1/forecast.json?key=" +
                 "$API_KEY" +
                 "&q=" +
@@ -175,6 +177,7 @@ class MainFragment : Fragment() {
                 /*Log.i("MyLog", "response:$response ")*/
             },
             {
+                binding.progressBar.visibility = View.INVISIBLE
                 Log.d("MyLog", "VOLLEY error: $it")
             })
         queue.add(stringRequest)
@@ -184,7 +187,7 @@ class MainFragment : Fragment() {
         val mainObject = JSONObject(result)
         val list = parseDays(mainObject)
         parseCurrentData(mainObject, list[0])
-
+        binding.progressBar.visibility = View.INVISIBLE
     }
 
     private fun parseDays(mainObject: JSONObject): List<WeatherModel> {

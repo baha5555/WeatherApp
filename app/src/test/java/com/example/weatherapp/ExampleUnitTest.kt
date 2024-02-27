@@ -14,4 +14,16 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    class MyBusinessLogic {
+        fun addNumbers(a: Int, b: Int): Int {
+            return a + b
+        }
+    }
+
+    @Test
+    fun testAddNumbers() {
+        val myBusinessLogic = MyBusinessLogic()
+        val result = myBusinessLogic.addNumbers(2, 3)
+    }
 }
