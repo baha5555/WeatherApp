@@ -80,13 +80,21 @@ class MainFragment : Fragment() {
         val adapter = VpAdapters(activity as FragmentActivity, flist)
         vp.adapter = adapter
         TabLayoutMediator(tabLayout, vp) { tab, pos ->
-            tabLayout.selectTab(tabLayout.getTabAt(0))
             tab.text = tlist[pos]
-
         }.attach()
-        ibSearch.setOnClickListener {
+        ibSync.setOnClickListener {
+            tabLayout.selectTab(tabLayout.getTabAt(0))
             checkLocation()
         }
+        ibSearch.setOnClickListener {
+            DialogManager.searchByNameDialog(requireContext(),object :DialogManager.Listener{
+                override fun onClick(name: String?) {
+                    name?.let { it1 -> requestWeatherData(it1) }
+                }
+
+            })
+        }
+
     }
 
     private fun checkLocation() {
@@ -94,7 +102,7 @@ class MainFragment : Fragment() {
             getLocation()
         } else {
             DialogManager.locationSettingsDialog(requireContext(), object : DialogManager.Listener {
-                override fun onClick() {
+                override fun onClick(name:String?) {
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
             })
@@ -163,6 +171,7 @@ class MainFragment : Fragment() {
             url,
             { response ->
                 parseWeatherData(response)
+                Toast.makeText(requireContext(),"Данные обновлено",Toast.LENGTH_SHORT).show()
                 /*Log.i("MyLog", "response:$response ")*/
             },
             {

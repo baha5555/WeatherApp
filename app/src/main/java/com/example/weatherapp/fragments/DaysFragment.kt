@@ -14,10 +14,10 @@ import com.example.weatherapp.adapters.WeatherModel
 import com.example.weatherapp.databinding.FragmentDaysBinding
 
 
-class DaysFragment : Fragment(),WeatherAdapter.Listener {
+class DaysFragment : Fragment(), WeatherAdapter.Listener {
     private lateinit var adapter: WeatherAdapter
     private lateinit var binding: FragmentDaysBinding
-    private val model:MainViewModel by activityViewModels()
+    private val model: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +30,8 @@ class DaysFragment : Fragment(),WeatherAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        model.liveDataList.observe(viewLifecycleOwner){
-            adapter.submitList(it.subList(1,it.size))
+        model.liveDataList.observe(viewLifecycleOwner) {
+            adapter.submitList(it.subList(1, it.size))
         }
     }
 
@@ -48,6 +48,6 @@ class DaysFragment : Fragment(),WeatherAdapter.Listener {
     }
 
     override fun onClick(item: WeatherModel) {
-model.liveDataCurrent.value = item
+        model.liveDataCurrent.value = item
     }
 }
